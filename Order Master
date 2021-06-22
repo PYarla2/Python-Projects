@@ -1,0 +1,136 @@
+# main.py
+import time
+import random
+
+def scrambler(unscrambled):
+  copy = [s for s in unscrambled]
+  for i in range(len(unscrambled)):
+    randomIndex =  random.randint(0,len(copy)-1)
+    temp = copy[i]
+    copy[i] = copy[randomIndex] 
+    copy[randomIndex] = temp
+  return "".join(copy)
+    
+   
+def unscramble():
+  global score
+  print("Your task is to unscramble the word below. Write in all lowercase. Type in 'Give Up' if you want to but know that you will lose points. Press Enter to begin.")
+  input()
+  #scrambled = ["beuyout", "uoclcraatl", "saswn", "sepalrt", "serpisha", "eotbtl"]
+  
+  unscrambled = ["youtube", "calculator", "swans", "stapler", "sharpies", "bottle"]
+  randomIndex = random.randint(0,5)
+  word = unscrambled[randomIndex]
+  print("Your word is " + scrambler(word))
+  ans = input("Unscramble the word:")
+  if ans == unscrambled[randomIndex]:
+    score+=1
+  while ans != unscrambled[randomIndex] and not giveUp(ans):
+    print("Try Again. Type in 'Give Up' to end the game")
+
+def giveUp(userInput):
+  global score
+  if userInput == "Give Up":
+    score -=1
+    return True
+
+  else:
+    return False
+    
+def math():
+  global score
+  print("Welcome to Math Universe. Your task is to quickly finish the given math problem to get your points and move on to the next order")
+  problem = {"Solve: 5+87:":"92", "Solve: 3+87:":"90","Solve: 5*184:":"920","Solve: 1546/4:":"386.5"}
+  randProblem = random.choice(list(problem))
+  answer = input(randProblem)
+
+  while not giveUp(answer) and problem[randProblem] != answer:
+    print("Keep trying or type in Give Up")
+    answer = input(randProblem)
+  if problem[randProblem] == answer:
+    score +=1
+    
+  
+  
+  
+
+    
+
+
+
+
+ 
+def hangman():
+  global score
+  endword = "hangman"
+  wordSet = set(endword)
+  print("Welcome to Hangman! You have 15 guesses to figure out the correct word. Good Luck!")
+  
+  guesses = 15
+  correctguesses = []
+  
+  #for i in range(len(endword)):
+    
+    #correctguesses.append("_ ")
+  
+  for i in range(15):
+    guess = input("Guess a letter!" + "You have "+ str(guesses) + " guesses left:")
+    if guess==endword:
+      print("Nice, the word is 'hangman'")
+      break
+    
+    if guess in endword:
+      correctguesses.append(guess)
+    for i in range(len(endword)):
+  
+      if endword[i] in correctguesses:
+        print(endword[i], end = "")
+      else:
+        print("_ ", end = "")
+    print()
+    if guess != wordSet:
+      guesses -= 1
+     
+    if guesses == 0:
+      print("You ran out of guesses. The correct word is hangman")
+    if set(correctguesses) == wordSet:
+  
+      print("Nice, the word is 'hangman'")
+      score +=1
+      break
+
+#welcome page- directions- random orders that come in- time start
+#for each item you have to finish some game to "make" that item and if you do not do it correclty it keeps going till you get it
+#if you say give up- subtract and move to the next order
+#points= money earned for the orders
+#list of games- ;hangman;math unscrambble
+  
+
+score = 0
+# todo: points, images, time, look better
+#welcome page
+print("Hi Welcome! to your new job. You will be making and serving orders to the upcoming customers. Press Enter to begin.")
+input()
+
+print("Directions: You will get 3 minutes to fulfill as many orders as you can! The order will pop up on the screen with a task to do to 'create' the order. If you do not answer right, it will keep asking you to answer. If you are stuck and give up, type in: give up, to move on to the next order. However that amount of the order will be subtracted from your money earned. And make sure to Watch Your Time.")
+#Start Time
+startTime = input("Type S to start the time:")
+if startTime == "S" or startTime == "s":
+  start = time.time()
+  end = time.time()
+else: 
+  print(startTime)
+#Order come in
+while end - start < 20:
+  orders = {"apples":"🍎 ","burger":"🍔", "fries": "🍟", "cookies":"🍪", "cake":"🍰", "pizza":"🍕","soda":"🥤", "coffee":"☕️", "hot chocolate":" ☕️"}
+  randOrder, emoji = random.choice(list(orders.items()))
+
+  #randOrder = random.choice(orders.keys())
+  print("Your next order is:" + randOrder)
+  games = [hangman,unscramble, math]
+  randGame = random.choice(games)
+  randGame()
+  end = time.time()
+  print(orders[randOrder])
+print("Your time is up. Nice Job.Your score is "+ str(score))
+  

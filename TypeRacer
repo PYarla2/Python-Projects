@@ -1,0 +1,26 @@
+# main.py
+import time
+
+print("Welcome to Type Racer. Press Enter to play")
+print("Ready...")
+time.sleep(1)
+print("Set...")
+time.sleep(1)
+print("Type...")
+sentence = "If a dog chews shoes, whose shoes does he chew?"
+print(sentence)
+start = time.time()
+typedS = input("Type:")
+print(typedS)
+
+
+while sentence != typedS:
+  print("The sentence does not match")
+  typedS = input("Type:")
+  
+  
+else: 
+  end = time.time()
+  print("It took these many seconds to type the sentence:" +str(end-start))
+
+

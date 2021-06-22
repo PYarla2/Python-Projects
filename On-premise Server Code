@@ -1,0 +1,37 @@
+import paramiko
+import os
+from datetime import datetime
+
+source = 'movie1.MP4'
+
+filePath = input('Enter File path: ')
+
+startTime = datetime.now()
+uploadStartTime = startTime.strftime("%H:%M:%S")
+print("Current Time =", uploadStartTime)
+ssh = paramiko.SSHClient()
+
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+ssh.connect(hostname='73.210.34.245', username='SandhyaMyneni', password='*****', port=22, timeout=15000000000000000000000000000000000000)
+
+sftp_client = ssh.open_sftp()
+
+os.getcwd()
+print(os.getcwd())
+os.chdir(filePath)
+print(os.getcwd())
+
+sftp_client.put(source,'Imsa/movie1.MP4')
+sftp_client.close()
+
+endTime = datetime.now()
+uploadEndTime = endTime.strftime("%H:%M:%S")
+print("End Time = ", uploadEndTime)
+
+
+transferTime = endTime - startTime
+
+print("Transfer Time = ", transferTime.total_seconds())
+
+ssh.close()
+

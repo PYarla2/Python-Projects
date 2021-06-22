@@ -1,0 +1,45 @@
+import pysynth
+
+
+
+morseDict = {"a": ".-", "b": "-...", "c": "-.-.", "d": "-..", "e": ".", "f": "..-.", "g": "--.", "h": "....", "i": "..", "j": ".---", "k": "-.-", "l": ".-..", "m": "--", "n": "-.", "o": "---", "p": ".--.", "q": "--.-", "r": ".-.", "s": "...", "t": "-", "u": "..-", "v": "...-", "w": ".--", "x": "-..-", "y": "-.--", "z": "--.."}
+
+# 1. Define a function that takes in a message and converts that message into morse code. (Make sure to put extra spaces inbetween your words.) Using the function, ask the user for a message and print out the translated message.
+def translate():
+  message = input("Enter a word to translate:")
+  translation = ""
+  for i in range(len(message)):
+    if message[i] == " ":
+      translation = " "
+    else:
+      translation += morseDict[message[i]]
+      
+  return translation
+translate()
+
+ each dot or dash.
+def song():
+  musicalCode = []
+  message = translate()
+  for i in range(len(message)):
+    if message[i] == ".":
+      musicalCode.append(("c",8))
+    if message[i] == "-":
+      musicalCode.append(("c",2))
+    if message[i] ==" ":
+      musicalCode.append(("r",2))
+    musicalCode.append(("r",8))
+  pysynth.make_wav(musicalCode, fn = "morseSong.wav")
+    
+song()
+    
+    
+    
+    
+    
+    
+    
+  
+  
+      
+    

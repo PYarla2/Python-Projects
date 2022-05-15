@@ -1,0 +1,210 @@
+grid = []
+
+for i in range(9):
+  height = []
+  for j in range(9):
+    height.append("_")
+  grid.append(height)
+
+#print grid
+def printGrid(grid): 
+  for i in range(len(grid)):
+    for j in range(len(grid[0])):
+      print(grid[i][j], end  = "")
+    print("")
+#printGrid(grid)
+
+
+
+f= open("player1.in")
+
+lines = f.readlines()
+lines = [line.strip() for line in lines]
+print(lines)
+#append to cordiantes each cordinate as list
+cordinates = []
+for line in lines:
+  cordinates.append(line.split())
+#change to int
+for cordinate in cordinates:
+  cordinate[0]= int(cordinate[0])
+  cordinate[1]= int(cordinate[1])
+print(cordinates)
+for cordinate in cordinates:
+  x = cordinate[0]
+  y = cordinate[1]
+  grid[x][y] = "X"
+
+##########################
+z= open("player2.in")
+
+lines = z.readlines()
+lines = [line.strip() for line in lines]
+print(lines)
+#append to cordiantes each cordinate as list
+cordinates = []
+for line in lines:
+  cordinates.append(line.split())
+#change to int
+for cordinate in cordinates:
+  cordinate[0]= int(cordinate[0])
+  cordinate[1]= int(cordinate[1])
+print(cordinates)
+for cordinate in cordinates:
+  x = cordinate[0]
+  y = cordinate[1]
+  grid[x][y] = "O"
+
+#####################
+
+#create grid
+
+
+#returns whether the cell at (x,y) is alive or dead at the next round
+def rules(x,y,grid):
+  count = 0
+  if y!=0 and grid[x][y-1] == "O":
+    count+=1
+  if y!= len(grid[0])-1 and  grid[x][y+1] == "O":
+    count+=1 
+  if x !=0 and y !=0 and grid[x-1][y-1] == "O":
+    count+=1
+  if x != 0 and grid[x-1][y] == "O":
+    count+=1
+  if x != 0 and y!= len(grid[0])-1 and grid[x-1][y+1] == "O":
+    count+=1
+  if x!= len(grid)-1 and y != len(grid[0])-1 and grid[x+1][y+1] == "O":
+    count+=1  
+  if x!= len(grid)-1 and y != 0  and grid[x+1][y-1] == "O":
+    count+=1
+  if x != len(grid)-1  and grid[x+1][y] == "O":
+    count+=1
+  return count
+def alive(count):
+  if count == 2 or count == 3:
+    
+    return True
+  else: 
+    return False
+    
+def over(count):
+  if count > 3:
+    
+    return True
+  else: 
+    return False
+    
+def alone(count):
+  if count < 2:
+    
+    return True
+  else: 
+    return False
+    
+def backAlive(count):
+  if count == 3:
+    
+    return True
+  else: 
+    return False
+
+def checkCell(i, j, grid, playerType):
+  cell = grid[i][j]
+  count = rules(i, j, grid)
+  
+  if cell == 'O':
+    c1 = alive(count)
+    c2 = over(count)
+    c3 = alone(count)
+    
+    if c1 == True:
+      cell = 'O'
+      
+    elif c2 == True or c3 == True:
+      cell = '_'
+      
+      
+  elif cell == '_': 
+    c4 = backAlive(count)
+    
+    if c4 == True:
+      cell = 'O'
+      
+  return cell
+  
+def countAmountcell(grid,playerType):
+  count = 0 
+  for i in range(len(grid)):
+    for j in range(len(grid[0])):
+      if grid[i][j] == playerType:
+        count+=1 
+  return count
+  
+while True:
+  #print - player2 ask for row and column add to grid go through rules change the playe rtype to x and repeat
+ 
+  
+  printGrid(grid)
+  print("Player O has " + str(countAmountcell(grid, "O")) + " cells alive")
+  count = countAmountcell(grid, "X")
+  print("Player X has " + str(countAmountcell(grid, "X")) + " cells alive")
+  playerType = "O"
+  print("It is player O's turn: ")
+  row = input("Please enter the row of the cell you would like to add:")
+  
+  column = input("Please enter the column of the cell you would like to add:")
+  grid[int(row)][int(column)]= playerType
+  
+  
+  for i in range(len(grid)):
+    for j in range(len(grid)):
+      grid[i][j] = checkCell(i,j,grid,playerType)
+      
+      
+      
+  playerType = "X"
+  
+  print("It is player X's turn: ")
+  row = input("Please enter the row of the cell you would like to add:")
+  
+  column = input("Please enter the column of the cell you would like to add:")
+  grid[int(row)][int(column)]= playerType
+  
+  for i in range(len(grid)):
+    for j in range(len(grid)):
+      grid[i][j] = checkCell(i,j,grid,playerType)
+  
+  printGrid(grid)
+  
+  if countAmountcell(grid, 'O') > countAmountcell(grid, 'X'):
+    print("Player O won")
+  elif countAmountcell(grid, 'O') < countAmountcell(grid, 'X'):
+    print("Player X won")
+  elif countAmountcell(grid, 'O') == countAmountcell(grid, 'X'):
+    print("Tie")
+  
+  
+    
+  
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

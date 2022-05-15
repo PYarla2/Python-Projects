@@ -1,0 +1,10 @@
+def recurFibon(n):
+
+  if  n==1:
+    return 0
+  elif n==2:
+    return 1
+  else:
+    return (recurFibon(n-1) +recurFibon(n-2))
+
+print(recurFibon(8))

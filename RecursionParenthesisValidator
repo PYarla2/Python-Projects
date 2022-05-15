@@ -1,0 +1,63 @@
+#Write a function that takes in a string made up entirely of parentheses (), braces {}, and brackets [], and returns True if the expression is valid(every parenthesis is closed)
+# main.py
+def validator(a):
+  parantheses= {"(":")", "{":"}", "[":"]"}
+  stack = []
+  if len(a) ==0:
+    return True
+  for i in range(len(a)):
+  
+    if a[i] in parantheses:
+      stack.append(a[i])
+    
+    elif a[i] in parantheses.values():
+     
+      if len(stack) ==0:
+        return False
+  
+      elif parantheses[stack.pop()] != a[i]:
+        return False
+        
+        
+  if len(stack) !=0:
+    return False
+  else:
+    return True
+print(validator("([])}"))  
+      
+def recurV(string):
+  
+  if len(string) == 0:
+    return True
+  
+  for i in range(len(string)):
+    a = string[i] + string[i+1]
+    
+    if a == "()" or a =="[]" or a =="{}":
+      s = string[:i] + string[i+2:]
+      return recurV(s)
+      
+  return False
+  
+print(recurV("()()"))
+      
+      
+    
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    

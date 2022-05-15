@@ -1,0 +1,171 @@
+# main.py
+# Tic Tak Toe game with using a advanced computer with a player
+import random
+
+
+# print grid
+grid = [[" ", " ", " "],[" ", " ", " "],[" ", " ", " "]]
+def printGrid(grid):
+  for i in range(3):
+    for j in range(3):
+      if j == 2:
+        print(" " +grid[i][j] + " ", end = "")
+      else: 
+         print(" " +grid[i][j] + " |", end = "")
+    print()
+    
+    if i != 2:
+      print("---+---+---")
+
+
+printGrid(grid)
+#make sure there is still places to play and not all full- sperate fucntion check
+def copyGrid(grid):
+  newGrid = []
+  for i in range(3):
+    row = []
+    for j in range(3):
+      row.append(grid[i][j])
+    newGrid.append(row)
+  return newGrid
+  
+  
+def smartCheck(grid):
+  #can I win 
+
+  for i in range(3):
+    for j in range(3):
+      smartGrid = copyGrid(grid)
+      smartGrid[i][j] = "O"
+      if win(smartGrid, "O"):
+        if grid[i][j] == " ":
+          grid[i][j] = "O"
+          return grid
+      
+  #block
+  for i in range(3):
+    for j in range(3):
+      smartGrid = copyGrid(grid)
+      smartGrid[i][j] = "X"
+      if win(smartGrid, "X"):
+        if grid[i][j] == " ":
+          grid[i][j] = "O"
+          return grid
+  #place in middle(if empty)
+  if grid[1][1] == " ":
+    grid[1][1] = "O"
+    return grid
+  #place in corners
+  if grid[0][0] == " ":
+    grid[0][0] = "O"
+    return grid
+  if grid[0][2] == " ":
+    grid[0][2] = "O"
+    return grid
+  if grid[2][0] == " ":
+    grid[2][0] = "O"
+    return grid
+  if grid[2][2] == " ":
+    grid[2][2] = "O"
+    return grid
+
+  
+  # place in sides
+  if grid[0][1] == " ":
+    grid[0][1] = "O"
+    return grid
+  if grid[1][0] == " ":
+    grid[1][0] = "O"
+    return grid
+  if grid[2][1] == " ":
+    grid[2][1] = "O"
+    return grid
+  if grid[1][2] == " ":
+    grid[1][2] = "O"
+    return grid
+  
+#check if all the boxes are filled and if there is a tie
+def checkDraw(grid):
+  for i in range(3):
+    for j in range(3):
+      if grid[i][j] == " ":
+        return False
+  return True
+    
+#check boundaries for winner
+def win(grid, player):
+  if grid[0][0] == player and grid[0][1] == player and grid[0][2] == player:
+    return True
+  if grid[1][0] == player and grid[1][1] == player and grid[1][2] == player:
+    return True
+  if grid[2][0] == player and grid[2][1] == player and grid[2][2] == player:
+    return True
+  if grid[0][0] == player and grid[1][0] == player and grid[2][0] == player:
+    return True
+  if grid[0][1] == player and grid[1][1] == player and grid[1][1] == player:
+    return True
+  if grid[0][2] == player and grid[1][2] == player and grid[2][2] == player:
+    return True
+  if grid[0][0] == player and grid[1][1] == player and grid[2][2] == player:
+    return True
+  if grid[0][2] == player and grid[1][2] == player and grid[2][2] == player:
+    return True
+    
+#coin flip to see who will start first
+coinFlip = random.randint(0,1)
+player = ""
+
+if coinFlip == 0:
+  print("The coin flip shows that you (X) will go first!")
+  enter = input("Press Enter to begin!:")
+  player = "X"
+else:
+  print("The coin flip shows that the computer (O) will go first!")
+  player = "O"
+
+
+#while True loop runs the game
+while True: 
+  printGrid(grid)
+  print()
+  if player == "X":
+    row = input("Please enter the row you would like to add:")
+      
+    column = input("Please enter the column you would like to add:")
+
+    if grid[int(row)][int(column)] == " ":
+      grid[int(row)][int(column)] = player
+    else:
+      print("That place is already filled.Move to which place?")
+    player = "O"
+    
+  
+  #if player is o, then we want the computer to play, before check is made check for full or win. Based on the that break out of while true and declare who is the winner
+  
+  else:
+    print("It is the Computer's Turn:")
+    grid = smartCheck(grid)
+    player = "X"
+  if win(grid,player) == True:
+    print("Good Job. " , player, " won!")
+    printGrid(grid)
+    break
+  if checkDraw(grid) == True:
+    print("Its a Tie:")
+    break
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+

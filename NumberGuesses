@@ -1,0 +1,64 @@
+# main.py
+import random
+print("I am thinking of a random number 1 and 100. Guess what it is!")
+
+
+num = random.randint(1,100) 
+print(num)
+guess = int(input("Enter a guess:"))
+
+  
+  
+tries = 1
+while guess!=num:
+  
+  if guess < num:
+    print("Thats too low")
+    
+  elif guess>num:
+    print("Thats to high")
+    
+  tries+=1
+  guess = int(input("Enter a guess:"))
+    
+print("You got it! I was thinking of number " + str(num) + "! It took you " + str(tries) + " tries.")
+    
+    
+    
+Randomnum = int(input("Pick a random number from 0 - 1000 inclusive and I will try to guess it in 15 tries (I promise I won't peek)"))
+Comguess = 500
+Guesses = 1
+Range = " "
+count = 500
+countcount = 1
+if Randomnum < 0 or Randomnum > 1000:
+  print("Please enter the correct number")
+  Randomnum = int(input("Pick a random number from 0 - 1000 inclusive and I will try to guess it in 15 tries (I promise I won't peek) Also 500 is the best number"))
+
+while Guesses <= 15 and Comguess != Randomnum:
+  countcount += 1
+  count = count/2
+  if count < 1:
+    count = 1
+  Guesses += 1
+  Range = input("My Guess is "+str(Comguess)+", am I too low or too high?")
+
+    Range = input("My Guess is "+str(Comguess)+", am I too low or too high?")
+  if Range == "L"or Range =="Lower"or Range =="lower"or Range =="LOWER"or Range =="l" or Range =="low" or Range =="Low" or Range =="LOW":
+    Comguess = int(Comguess+count)
+  else:
+    Comguess = int(Comguess - count)
+  
+    
+  
+  
+  
+  
+
+
+    
+    
+    
+    
+    
+    
